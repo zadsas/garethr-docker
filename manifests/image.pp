@@ -1,16 +1,16 @@
 define docker::image(
   $ensure = 'present',
   $image  = $title,
-  $tag    = undef
+  $docker_tag    = undef
 ) {
 
   validate_re($ensure, '^(present|absent)$')
   validate_re($image, '^[\S]*$')
 
-    if $tag {
-      $image_install = "docker pull -t=\"${tag}\" ${image}"
-      $image_remove  = "docker rmi ${image}:${tag}"
-      $image_find    = "docker images | grep ^${image} | awk '{ print \$2 }' | grep ${tag}"
+    if $docker_tag {
+      $image_install = "docker pull -t=\"${docker_tag}\" ${image}"
+      $image_remove  = "docker rmi ${image}:${docker_tag}"
+      $image_find    = "docker images | grep ^${image} | awk '{ print \$2 }' | grep ${docker_tag}"
     } else {
       $image_install = "docker pull ${image}"
       $image_remove  = "docker rmi ${image}"
