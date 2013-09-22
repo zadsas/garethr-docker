@@ -8,6 +8,7 @@ define docker::run(
   $volumes_from = false,
   $username = '',
   $hostname = '',
+  $privileged = false,
   $env = [],
   $dns = [],
 ) {
@@ -16,7 +17,7 @@ define docker::run(
   validate_re($title, '^[\S]*$')
   validate_re($memory_limit, '^[\d]*$')
   validate_string($command, $username, $hostname)
-  validate_bool($running)
+  validate_bool($running, $privileged)
 
   $ports_array = any2array($ports)
   $volumes_array = any2array($volumes)
