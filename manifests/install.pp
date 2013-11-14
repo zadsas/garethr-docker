@@ -12,7 +12,6 @@
 class docker::install {
   include apt
   validate_string($docker::version)
-  validate_re($::osfamily, '^Debian$', 'This module uses the docker apt repo and only works on Debian systems that support it.')
   validate_string($::kernelrelease)
 
   apt::source { 'docker':
