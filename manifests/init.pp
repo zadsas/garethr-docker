@@ -25,7 +25,6 @@ class docker(
 ) inherits docker::params {
 
   validate_string($version)
-  validate_re($::osfamily, '^Debian$', 'This module uses the docker apt repo and only works on Debian systems that support it.')
 
   class { 'docker::install': } ->
   class { 'docker::config': } ~>
