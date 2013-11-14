@@ -10,7 +10,7 @@ describe 'docker::image', :type => :define do
   end
 
   context 'with ensure => absent and tag => precise' do
-    let(:params) { { 'ensure' => 'absent', 'tag' => 'precise' } }
+    let(:params) { { 'ensure' => 'absent', 'docker_tag' => 'precise' } }
     it { should contain_exec('docker rmi base:precise') }
   end
 
@@ -20,7 +20,7 @@ describe 'docker::image', :type => :define do
   end
 
   context 'with ensure => present and tag => precise' do
-    let(:params) { { 'ensure' => 'present', 'tag' => 'precise' } }
+    let(:params) { { 'ensure' => 'present', 'docker_tag' => 'precise' } }
     it { should contain_exec('docker pull -t="precise" base') }
   end
 
