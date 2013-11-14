@@ -26,20 +26,19 @@ class docker::install {
     include_src       => false,
   }
 
-  # determine the package name for 'linux-image-extra-$(uname -r)' based on the
-  # $::kernelrelease fact
-  # $kernelpackage = "linux-image-extra-${::kernelrelease}"
+  case $docker::version {
+    /^(present|absent)$/: {
+      package { 'lxc-docker':
+        ensure  => $docker::version,
+        require => Apt::Source['docker'],
+      }
+    }
 
-  # package { $kernelpackage:
-  #   ensure => present,
-  # }
-
-  package { 'lxc-docker':
-    ensure  => $docker::version,
-    require => [
-        Apt::Source['docker'],
-        # Package[$kernelpackage],
-    ],
+    default: {
+      package { "lxc-docker-${docker::version}":
+        ensure  => $docker::version,
+        require => Apt::Source['docker'],
+      }
+    }
   }
-
 }

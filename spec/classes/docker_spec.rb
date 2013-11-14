@@ -15,12 +15,12 @@ describe 'docker', :type => :class do
   context 'with no parameters' do
     it { should include_class('apt') }
     it { should contain_package('lxc-docker').with_ensure('present') }
-    it { should contain_package('lxc-docker').with_require(['Apt::Source[docker]', 'Package[linux-image-extra-3.8.0-29-generic]']) }
+    it { should contain_package('lxc-docker').with_require('Apt::Source[docker]') }
   end
 
   context 'with a custom version' do
-    let(:params) { {'version' => 'absent' } }
-    it { should contain_package('lxc-docker').with_ensure('absent') }
+    let(:params) { {'version' => '0.6.3' } }
+    it { should contain_package('lxc-docker-0.6.3').with_ensure('0.6.3') }
   end
 
   context 'with an invalid distro name' do
