@@ -1,5 +1,7 @@
 define docker::run(
   $image,
+  $container_name = $title,
+  $use_name = false,
   $command,
   $memory_limit = '0',
   $ports = [],
@@ -18,7 +20,7 @@ define docker::run(
   validate_re($image, '^[\S]*$')
   validate_re($title, '^[\S]*$')
   validate_re($memory_limit, '^[\d]*$')
-  validate_string($command, $username, $hostname, $working_dir)
+  validate_string($command, $username, $hostname, $working_dir, $container_name)
   validate_bool($running, $privileged)
 
   $ports_array = any2array($ports)
