@@ -21,7 +21,7 @@ define docker::run(
   validate_re($title, '^[\S]*$')
   validate_re($memory_limit, '^[\d]*$')
   validate_string($command, $username, $hostname, $working_dir, $container_name)
-  validate_bool($running, $privileged)
+  validate_bool($running, $privileged, $use_name)
 
   $ports_array = any2array($ports)
   $volumes_array = any2array($volumes)
