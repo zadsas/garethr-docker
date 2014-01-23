@@ -4,6 +4,8 @@ define docker::run(
   $memory_limit = '0',
   $ports = [],
   $volumes = [],
+  $links = [],
+  $working_dir = '/',
   $running = true,
   $volumes_from = false,
   $username = '',
@@ -16,13 +18,14 @@ define docker::run(
   validate_re($image, '^[\S]*$')
   validate_re($title, '^[\S]*$')
   validate_re($memory_limit, '^[\d]*$')
-  validate_string($command, $username, $hostname)
+  validate_string($command, $username, $hostname, $working_dir)
   validate_bool($running, $privileged)
 
   $ports_array = any2array($ports)
   $volumes_array = any2array($volumes)
   $env_array = any2array($env)
   $dns_array = any2array($dns)
+  $links_array = any2array($links)
 
   file { "/etc/init/docker-${title}.conf":
     ensure  => present,
