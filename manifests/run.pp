@@ -43,6 +43,6 @@ define docker::run(
     require    => File["/etc/init/docker-${title}.conf"],
   }
 
-  Service['docker-mysql'] -> Service['docker-release']
+  Service <| title == 'docker-mysql' |> -> Service <| title == 'docker-release' |>
 
 }
