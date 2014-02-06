@@ -15,12 +15,13 @@ define docker::run(
   $privileged = false,
   $env = [],
   $dns = [],
+  $dependant = '',
 ) {
 
   validate_re($image, '^[\S]*$')
   validate_re($title, '^[\S]*$')
   validate_re($memory_limit, '^[\d]*$')
-  validate_string($command, $username, $hostname, $working_dir, $container_name)
+  validate_string($command, $username, $hostname, $working_dir, $container_name, $dependant)
   validate_bool($running, $privileged, $use_name)
 
   $ports_array = any2array($ports)
@@ -41,6 +42,7 @@ define docker::run(
     hasrestart => true,
     provider   => upstart,
     require    => File["/etc/init/docker-${title}.conf"],
+    notify     => Service["docker-${dependant}"],
   }
 
 }
