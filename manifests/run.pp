@@ -35,14 +35,25 @@ define docker::run(
     content => template('docker/etc/init/docker-run.conf.erb')
   }
 
-  service { "docker-${title}":
-    ensure     => $running,
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
-    provider   => upstart,
-    require    => File["/etc/init/docker-${title}.conf"],
-    notify     => Service["docker-${dependant}"],
+  if $dependant == '' {
+    service { "docker-${title}":
+      ensure     => $running,
+      enable     => true,
+      hasstatus  => true,
+      hasrestart => true,
+      provider   => upstart,
+      require    => File["/etc/init/docker-${title}.conf"],
+    }
   }
-
+  else {
+    service { "docker-${title}":
+      ensure     => $running,
+      enable     => true,
+      hasstatus  => true,
+      hasrestart => true,
+      provider   => upstart,
+      require    => File["/etc/init/docker-${title}.conf"],
+      notify     => Service["docker-${dependant}"],
+    }
+  }
 }
